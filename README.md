@@ -9,7 +9,7 @@ WIP
 * [curl](https://github.com/curl/curl)
 * _Optional but helpful for troubleshooting:_ [exiv2](https://exiv2.org/) 
 
-### Steps to run:
+### Steps to run (build from the vulnerable-app folder):
 * Build the image: `docker build -t poc .`
 * Run the vulnerable app: `docker run --rm -p 3000:3000 poc`
 * Trigger the exploit, passing in whatever file you want to cat from the poc: `./exploit.py /etc/hosts`
