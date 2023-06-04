@@ -6,7 +6,8 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    images = os.listdir(app.config['UPLOAD_FOLDER'])
+    return render_template('index.html', images=images)
 
 @app.route('/uploads/<path:path>', methods=['GET'])
 def uploads(path):
@@ -19,11 +20,6 @@ def upload():
     command = "/usr/bin/convert "+ os.path.join(app.config['UPLOAD_FOLDER'], file.filename) +" -resize 100x100 "+ os.path.join(app.config['UPLOAD_FOLDER'], "resized-image-"+file.filename)
     os.system(command)
     return 'File uploaded'
-
-@app.route('/images')
-def images():
-    images = os.listdir(app.config['UPLOAD_FOLDER'])
-    return render_template('images.html', images=images)
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
